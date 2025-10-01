@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hồ Sơ | Demo 2</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  padding: 40px 20px;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  animation: fadeIn 0.6s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+h1 {
+  color: white;
+  text-align: center;
+  margin-bottom: 40px;
+  font-size: 2.5em;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.profile-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  margin-bottom: 25px;
+}
+
+h2 {
+  color: #333;
+  margin-bottom: 25px;
+  font-size: 1.8em;
+  padding-bottom: 15px;
+  border-bottom: 3px solid #667eea;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.info-row {
+  display: flex;
+  align-items: center;
+  padding: 15px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.info-row:last-child {
+  border-bottom: none;
+}
+
+.info-row p {
+  color: #555;
+  font-size: 1.1em;
+  margin: 0;
+}
+
+.info-row strong {
+  color: #333;
+  margin-left: 10px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-size: 1.15em;
+}
+
+.admin-box {
+  border: 2px solid #dc3545;
+  padding: 25px;
+  background: linear-gradient(135deg, #ffe5e5 0%, #ffd7da 100%);
+  color: #721c24;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(220, 53, 69, 0.2);
+  animation: slideIn 0.5s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.admin-box h3 {
+  color: #721c24;
+  margin-bottom: 15px;
+  font-size: 1.4em;
+}
+
+.admin-box p {
+  color: #721c24;
+  margin-bottom: 12px;
+  line-height: 1.6;
+}
+
+.admin-box a {
+  color: #dc3545;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  border-bottom: 2px solid transparent;
+}
+
+.admin-box a:hover {
+  color: #a71d2a;
+  border-bottom-color: #a71d2a;
+}
+
+.user-box {
+  background: linear-gradient(135deg, #e8f4f8 0%, #d4edda 100%);
+  padding: 20px;
+  border-radius: 15px;
+  border: 2px solid #28a745;
+  color: #155724;
+  box-shadow: 0 4px 15px rgba(40, 167, 69, 0.2);
+}
+
+.user-box p {
+  color: #155724;
+  font-weight: 600;
+  margin: 0;
+}
+
+.nav {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.nav a {
+  text-decoration: none;
+  color: white;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 15px 35px;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 1em;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+  position: relative;
+  overflow: hidden;
+}
+
+.nav a::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+  transition: left 0.3s ease;
+  z-index: 0;
+}
+
+.nav a:hover::before {
+  left: 0;
+}
+
+.nav a:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+}
+
+.nav a span {
+  position: relative;
+  z-index: 1;
+}
+
+.nav-container {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 1.8em;
+  }
+  
+  .profile-card {
+    padding: 25px 20px;
+  }
+  
+  h2 {
+    font-size: 1.4em;
+  }
+  
+  .info-row p {
+    font-size: 1em;
+  }
+  
+  .nav a {
+    padding: 12px 25px;
+    font-size: 0.95em;
+  }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Trang Hồ Sơ Người Dùng (Cần Xác thực)</h1>
+
+  <div class="profile-card">
+    <h2>Thông tin người dùng:</h2>
+    <div class="info-row">
+      <p>Tên đăng nhập: <strong><span sec:authentication="name">Tên người dùng</span></strong></p>
+    </div>
+    <div class="info-row">
+      <p>Quyền hạn (Roles): <strong><span sec:authentication="principal.authorities">Quyền</span></strong></p>
+    </div>
+  </div>
+
+  <div sec:authorize="hasRole('ADMIN')" class="profile-card admin-box">
+    <h3>Tính năng dành cho Quản trị viên</h3>
+    <p>Bạn có quyền <strong>ROLE_ADMIN</strong> để thực hiện các thao tác quản trị.</p>
+    <p>Kiểm tra API yêu cầu ADMIN: <a href="/api/users/all">Xem danh sách Users (API)</a></p>
+  </div>
+
+  <div sec:authorize="hasRole('USER')" class="profile-card user-box">
+    <p>Bạn có quyền <strong>ROLE_USER</strong>.</p>
+  </div>
+
+  <div class="nav-container">
+    <div class="nav">
+      <a href="/home"><span>Về Trang chủ</span></a>
+      <a href="/logout"><span>Đăng xuất</span></a>
+    </div>
+  </div>
+</div>
+</body>
+</html>
